@@ -1,5 +1,18 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { Roboto } from 'next/font/google';
+// import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from "@mui/material";
+import theme from '../theme';
+import { Toaster } from "react-hot-toast";
+
+const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto',
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,8 +33,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable}`}>
+        <AppRouterCacheProvider>
+        <Toaster position="bottom-center" />
+            {children}
+          
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
