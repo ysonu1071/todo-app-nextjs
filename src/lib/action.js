@@ -2,6 +2,8 @@
 
 import { Todo } from "./models"
 import { connectToDb } from "./utils";
+import { revalidatePath } from "next/cache";
+
 
 export const addTodo = async (prevState, formData) => {
     const { todo } = prevState;
@@ -14,8 +16,8 @@ export const addTodo = async (prevState, formData) => {
 
         await newTodo.save();
         console.log("saved to db");
+        revalidatePath("/todo");
         return {success:true, message: "" };
-        // revalidatePath("/blog");
         // revalidatePath("/admin");
     } catch (err) {
         console.log(err);

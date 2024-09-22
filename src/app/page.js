@@ -14,6 +14,7 @@ import { completeAndIncompleteTodo, deleteTodo, getTodos, updateTodo } from "@/l
 import { addTodo } from "@/lib/action";
 import { toast } from 'react-hot-toast';
 import { usePathname } from "next/navigation";
+import { unstable_noStore as noStore } from "next/cache";
 // import { useRouter } from 'next/router';
 
 export default function Home() {
@@ -29,20 +30,20 @@ export default function Home() {
   const path = usePathname();
 
   // const { asPath } = useRouter();
-    const origin =
-        typeof window !== 'undefined' && window.location.origin
-            ? window.location.origin
-            : '';
+  const origin =
+    typeof window !== 'undefined' && window.location.origin
+      ? window.location.origin
+      : '';
 
-    const URL = `${origin}${path}`;
+  const URL = `${origin}${path}`;
 
   console.log(URL, 'thhis is path')
-  
+
 
   const handleChange = (event, newValue) => {
     console.log('value chagnign')
     setValue(newValue);
-    
+
   };
 
   const handleClose = () => {
@@ -136,7 +137,7 @@ export default function Home() {
 
   const getTodosData = () => {
     setIsloading(true);
-    fetch(`${URL}todos`, {})
+    fetch(`${URL}todos`, { noStore })
       .then((res) => {
 
         return res.json();
@@ -166,14 +167,14 @@ export default function Home() {
   return (
     <SnackbarProvider maxSnack={3}>
       <Box sx={{ width: "100vw", height: '100vh', display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "whitesmoke" }}>
-        <Paper sx={{ width:{md:"70%", xs:"95%"}, height: {md:"70vh", xs:"100vh"}, }}>
+        <Paper sx={{ width: { md: "70%", xs: "95%" }, height: { md: "70vh", xs: "100vh" }, }}>
           <Box sx={{ display: 'flex', justifyContent: "center", backgroundColor: "lightblue" }}>
             <Typography sx={{ fontSize: "20px", padding: '20px', fontWeight: "bold" }}>Todo App</Typography>
           </Box>
-          <Box sx={{ display: "flex",flexDirection:{md:'row', xs:"column-reverse"}, justifyContent: "space-between", alignItems: "center", padding: "10px 20px", }}>
+          <Box sx={{ display: "flex", flexDirection: { md: 'row', xs: "column-reverse" }, justifyContent: "space-between", alignItems: "center", padding: "10px 20px", }}>
             <TabsComponent handleChange={handleChange} value={value} />
             <Box sx={{
-              display: "flex", justifyContent: "space-between", flexDirection:{md:'row', xs:"column-reverse"}, alignItems: "center", gap: "20px",
+              display: "flex", justifyContent: "space-between", flexDirection: { md: 'row', xs: "column-reverse" }, alignItems: "center", gap: "20px",
               "& .MuiInputBase-input": { padding: "7.5px 14px" }
             }}
 
@@ -194,13 +195,13 @@ export default function Home() {
               <AddTodoModel getTodosData={getTodosData} handleClose={handleClose} handleUpdateTodo={handleUpdateTodo} isEdit={isEdit} handleAddTodo={handleAddTodo} openDialog={openDialog} setOpenDialog={setOpenDialog} todo={todo} setTodo={setTodo} />
             </Box>
           </Box>
-          <Box sx={{height:{md:"70%", xs:"50%"}, overflow: "auto",}}>
-          {!isLoading && todos && todos.length > 0 && <Box>
-            {todos.map((todo) => <Todo todo={todo} key={todo.id} handleOpenEdit={handleOpenEdit} handleCompleteAndIncompleteTodo={handleCompleteAndIncompleteTodo} handleDelete={handleDelete} />)}
+          {!isLoading && todos && todos.length > 0 && <Box sx={{ height: { md: "70%", xs: "50%" }, overflow: "auto", }}>
+            <Box>
+              {todos.map((todo) => <Todo todo={todo} key={todo.id} handleOpenEdit={handleOpenEdit} handleCompleteAndIncompleteTodo={handleCompleteAndIncompleteTodo} handleDelete={handleDelete} />)}
+            </Box>
           </Box>}
-          </Box>
 
-          {!isLoading && todos && todos.length == 0 && <Box sx={{ display: 'flex', justifyContent: "center", alignItems: "center", height: "70%" }}>
+          {!isLoading && todos && todos.length == 0 && <Box sx={{ display: 'flex', justifyContent: "center", alignItems: "center", height: { md: "70%", xs: "50%" } }}>
             <Typography>No Todo Found</Typography>
           </Box>}
 
@@ -210,9 +211,9 @@ export default function Home() {
 
         </Paper>
 
-      <Box sx={{position:'absolute', bottom:'0px', right:"0px", padding:"20px"}}>
-        <Typography sx={{fontSize:"12px"}}>Developed by Sonu Kumar</Typography>
-      </Box>
+        <Box sx={{ position: 'absolute', bottom: '0px', right: "0px", padding: "20px" }}>
+          <Typography sx={{ fontSize: "12px" }}>Developed by Sonu Kumar</Typography>
+        </Box>
       </Box>
     </SnackbarProvider>
   );

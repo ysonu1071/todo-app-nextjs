@@ -42,7 +42,7 @@ const AddTodoModel = ({getTodosData, openDialog, setOpenDialog, todo, setTodo, h
                 {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description" sx={{ "& .MuiInputBase-input": { padding: "7.5px 14px" } }}>
-                        <TextField sx={{ width: "400px" }} placeholder='Enter your todo' value={todo} onChange={(e) => setTodo(e.target.value)} />
+                        <TextField sx={{ width: {md:"400px", xs:"250px"} }} placeholder='Enter your todo' value={todo} onChange={(e) => setTodo(e.target.value)} />
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
