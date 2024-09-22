@@ -137,7 +137,7 @@ export default function Home() {
 
   const getTodosData = () => {
     setIsloading(true);
-    fetch(`${URL}todos`, { noStore })
+    fetch(`${URL}todos`, { next: { revalidate: 1 } })
       .then((res) => {
 
         return res.json();
